@@ -5,7 +5,7 @@ This project is use for detections of rice in an image or video capture using op
 This program will determine ...
 - Number of rice
 - Size of each rice
-- Categorized different types of rice
+- Categorized different types of rice (Not Finished)
 
 ## Installation
 First, clone this repository
