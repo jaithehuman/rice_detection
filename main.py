@@ -60,18 +60,21 @@ def main(capture = False, sc = 0):
 	pixelsPerMetric = None
 
 	rice = 0
-	for x in cnts:
-		if cv2.contourArea(x) > 50 and cv2.contourArea(x) < 200:
-			rice = rice + 1
-		elif cv2.contourArea(x) > 200 and cv2.contourArea(x) < 500:
-			rice = rice + 15
+	# for x in cnts:
+	# 	if cv2.contourArea(x) > 50 and cv2.contourArea(x) < 200:
+	# 		rice = rice + 1
+	# 	elif cv2.contourArea(x) > 200 and cv2.contourArea(x) < 500:
+	# 		rice = rice + 15
 
 	rice = str(len(cnts))
 	rice= int(rice) - 1
 	print("Rice count:", rice)
 	print()
 	count = 0
-	# cv2.imshow("edge",edged)
+	cv2.imshow("edge",edged)
+	# cv2.waitKey(0)
+	# cv2.destroyAllWindows
+	
 	for c in cnts:
 		group = False
 		if cv2.contourArea(c) < 50:
@@ -145,10 +148,12 @@ def main(capture = False, sc = 0):
 		cv2.putText(orig,"Rice:"+ str(rice),(0,440),cv2.FONT_HERSHEY_SIMPLEX,1,(0, 255, 0), 2)
 		# show output 
 		# print(count)
-		count += 1
+		
 		# if count >> 1:
 		cv2.imshow("Measuring_Size_Image", orig)
 		cv2.waitKey(0)
+
+		count += 1
 
 
 
