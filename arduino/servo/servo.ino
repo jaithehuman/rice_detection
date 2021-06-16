@@ -11,12 +11,7 @@ void setup()
   pinMode(3, INPUT);//button
   pinMode(servoPin, OUTPUT); //servo
   pinMode(ledPin, INPUT);
-  
-  digitalWrite(ledPin,LOW);
-  
-  myservo.attach(servoPin);
-  myservo.write(0);
-  
+  digitalWrite(ledPin,HIGH);
   Serial.begin(9600);
 }
 
@@ -36,10 +31,12 @@ void loop(){
 }
 
 void servo_control(){ //stops at 1,3,5,7,...
+  myservo.attach(servoPin);
+  myservo.write(0);
   for(int i = 0; i<9;i++){
     for(int j=0;j<5;j++){
       digitalWrite(ledPin, LOW);
-      myservo.write(28);
+      myservo.write(50);
       delay(100);
       myservo.write(0);
       delay(100);
@@ -47,4 +44,5 @@ void servo_control(){ //stops at 1,3,5,7,...
     digitalWrite(ledPin, HIGH);
     delay(1000);
   }
+  myservo.detach();
 }
