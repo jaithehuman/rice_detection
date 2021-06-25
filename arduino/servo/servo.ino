@@ -36,7 +36,7 @@ void servo_control(){ //stops at 1,3,5,7,...
   for(int i = 0; i<9;i++){
     for(int j=0;j<5;j++){
       digitalWrite(ledPin, LOW);
-      myservo.write(50);
+      myservo.write(30);
       delay(100);
       myservo.write(0);
       delay(100);

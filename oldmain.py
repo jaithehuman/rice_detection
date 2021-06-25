@@ -4,16 +4,18 @@ from imutils import contours
 import numpy as np
 import imutils
 import cv2
+import argparse
+from pathlib import Path
 
-# define a video capture object
 
+def midpoint(ptA, ptB):
+	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
 
 def vid_cap():
 	vid = cv2.VideoCapture(0)
 	x,y,h,w = 45,5,440,465
-
+	sc = 1
 	while(True):
-		
 		# Capture the video frame
 		# by frame
 		ret, frame = vid.read()
@@ -25,7 +27,7 @@ def vid_cap():
 		
 		# print(frame.shape)
 		if cv2.waitKey(1) & 0xFF == ord('q'):
-			cv2.imwrite("xxx.jpg",img)
+			cv2.imwrite("test.jpg",img)
 			capture = img.copy()
 			cv2.destroyAllWindows()
 			break
@@ -35,12 +37,14 @@ def vid_cap():
 	cv2.imshow("captured",capture)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
-	measure(capture)
+	main(capture,sc)
 
-def midpoint(ptA, ptB):
-	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
-
-def measure(image):
+def main(capture = False, sc = 0):
+	if sc == 1:
+		image = capture
+	else:
+		path = opt.source
+		image = cv2.imread(path)
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
@@ -54,24 +58,26 @@ def measure(image):
 	
 	(cnts, _) = contours.sort_contours(cnts)
 	pixelsPerMetric = None
+
+	rice = 0
+
 	rice = str(len(cnts))
 	rice= int(rice) - 1
 	print("Rice count:", rice)
 	print()
 	count = 0
 	cv2.imshow("edge",edged)
+	# cv2.waitKey(0)
+	# cv2.destroyAllWindows
+	
 	for c in cnts:
 		group = False
 		if cv2.contourArea(c) < 50:
 			continue
-		if cv2.contourArea(c) > 190:
+		if cv2.contourArea(c) > 200:
 			if count != 0:
-				group = True
-				print("group of rice")
 				# rice = rice + 5
-			# elif count == 0:
-			# 	print("coin")
-		# rice = rice+1
+				group = True
 		orig = image.copy()
 		box = cv2.minAreaRect(c)
 		box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
@@ -83,7 +89,7 @@ def measure(image):
 		for (x, y) in box:
 			cv2.circle(orig, (int(x), int(y)), 5, (0, 255, 64), -1)
 			
-	
+
 		(tl, tr, br, bl) = box
 		(tltrX, tltrY) = midpoint(tl, tr)
 		(blbrX, blbrY) = midpoint(bl, br)
@@ -103,7 +109,7 @@ def measure(image):
 	
 		dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
 		dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
-	
+
 		if pixelsPerMetric is None:
 			pixelsPerMetric = dB / 0.787402
 	
@@ -119,7 +125,10 @@ def measure(image):
 			dimA = dimB
 			dimB = temp
 		
+		print()	
 		if group == True:
+			print("group of rice")
+			print()
 			cv2.putText(orig,"Group of rice",(int(tltrX - 15), int(tltrY - 10)),cv2.FONT_HERSHEY_SIMPLEX,1,(255, 255, 255), 2)
 		elif group == False:
 			print("Rice_" + str(count))
@@ -132,15 +141,26 @@ def measure(image):
 				(int(trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX,
 				0.65, (255, 255, 255), 2)
 		cv2.putText(orig,"Rice:"+ str(rice),(0,440),cv2.FONT_HERSHEY_SIMPLEX,1,(0, 255, 0), 2)
-		print()
 		# show output 
 		# print(count)
-		count += 1
+		
 		# if count >> 1:
 		cv2.imshow("Measuring_Size_Image", orig)
 		cv2.waitKey(0)
 
+		count += 1
 
-# test = cv2.imread(".\dataset\coin1.jpg")
-# measure(test)
-vid_cap()
+
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--source', type=str, default='.\dataset\size3.jpg', help='Path to image file')
+	opt = parser.parse_args()
+	print(opt)
+
+	if opt.source.isnumeric():
+		vid_cap()
+	else:
+		main()
+	
+	

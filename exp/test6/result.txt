@@ -1,32 +1,32 @@
-test6
+test_6
 image_0
-count:20
+count:7
 
 image_1
-count:37
+count:6
 
 image_2
-count:55
+count:22
 
 image_3
-count:52
+count:7
 
 image_4
-count:52
+count:7
 
 image_5
-count:58
+count:18
 
 image_6
-count:56
+count:17
 
 image_7
-count:60
+count:15
 
 image_8
-count:54
+count:19
 
 image_9
-count:65
+count:18
 
-Highest rice count:65
+Highest rice count:22

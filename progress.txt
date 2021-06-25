@@ -42,4 +42,18 @@ NEW!! FINAL
 4.end the program ✔
 -stop arduino and python ✔
 
+5.measure size of best picture
+-plot histogram
+
 13.5 cm * 13 cm
+
+13.314 * 12.95 cm
+
+UPDATE!
+0.plot histogram ref. ✔
+0.fix camera positioning
+1.using contours technique
+-more accurate number but cant get all size
+-less accurate but get almost all size
+2.plot histogram
+3.use qr positioning (FIDACIALS)

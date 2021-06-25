@@ -10,7 +10,7 @@ def calibrate():
 		cv2.imshow("webcam",img)
 
 		if cv2.waitKey(1) & 0xFF == ord('q'):
-			cv2.imwrite("test.jpg",img)
+			cv2.imwrite("real.jpg",img)
 			cv2.destroyAllWindows()
 			break
 

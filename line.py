@@ -9,7 +9,7 @@ diff = (3,3,3)
 mask = numpy.zeros((h+2,w+2),numpy.uint8)
 cv2.floodFill(I,mask,(0,0), (255,255,255),diff,diff)
 T,I = cv2.threshold(I,180,255,cv2.THRESH_BINARY)
-# I = cv2.medianBlur(I, 1)
+I = cv2.medianBlur(I, 5)
 
 totalrice = 0
 oldlinecount = 0
